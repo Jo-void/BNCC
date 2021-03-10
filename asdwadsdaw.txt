@@ -1,0 +1,417 @@
+import java.util.*;
+
+public class Mentoll{
+Random r = new Random();
+Scanner scan = new Scanner(System.in);
+    List<String> v_name = new ArrayList<String>();
+    List<String> v_code = new ArrayList<String>();
+    List<String> v_gender = new ArrayList<String>();
+    List<String> v_jabatan = new ArrayList<String>();
+    List<String> v_manager = new ArrayList<String>();
+    List<String> v_supervisor = new ArrayList<String>();
+    List<String> v_admin = new ArrayList<String>();
+    List<Integer> v_gaji = new ArrayList<Integer>();
+    void menu(){
+        System.out.println("PT. Mentol");
+        System.out.println("+=+=+=+=+=+");
+        System.out.println("1. Input");
+        System.out.println("2. View");
+        System.out.println("3. Update");
+        System.out.println("4. Delete");
+        System.out.println("5. Exit");
+        System.out.println(">>>");
+    }
+    String nama;
+    String Gender;
+    String jabatan;
+    void checkGaji(){
+        for(int i = 0; i < v_jabatan.size(); i++){
+            if(v_manager.size() <= 3) {
+                if(v_jabatan.get(i).equals("Manager")){
+                    v_gaji.set(i, 8000000);
+                }
+            }else if (v_manager.size() >= 4){
+                Integer cout = 0;
+                for(int j = 0; j < v_jabatan.size(); j++){
+                    if(v_jabatan.get(j).equals("Manager")){
+                        cout++;
+                        v_gaji.set(j, 8800000);
+                        if(cout == v_manager.size()) {
+                                v_gaji.set(v_jabatan.lastIndexOf("Manager"), 8000000);
+                            }
+                        }
+                    }  
+                }
+            }
+            for(int i = 0; i < v_jabatan.size(); i++){
+                if(v_supervisor.size() <= 3){
+                    if(v_jabatan.get(i).equals("Supervisor")){
+                        v_gaji.set(i, 6000000);
+                    }
+                }else if (v_supervisor.size() >= 4){
+                    Integer cout1 = 0;
+                    for(int j = 0; j < v_jabatan.size(); j++){
+                        if(v_jabatan.get(j).equals("Supervisor")){
+                            cout1++;
+                            v_gaji.set(j, 6450000);
+                            if(cout1 == v_supervisor.size()){
+                                v_gaji.set(v_jabatan.lastIndexOf("Supervisor"), 6000000);
+                            }
+                        }
+                    }  
+                }
+            }
+            for(int i = 0; i < v_jabatan.size(); i++){
+                if(v_admin.size() <= 3){
+                    if(v_jabatan.get(i).equals("Admin")){
+                        v_gaji.set(i, 4000000);
+                    }
+                }else if (v_admin.size() >= 4){
+                    Integer cout2 = 0;
+
+                    for(int j = 0; j < v_jabatan.size(); j++){
+                        if(v_jabatan.get(j).equals("Admin")){
+                            cout2++;
+                            v_gaji.set(j, 4200000);
+                            if(cout2 == v_admin.size()){
+                                v_gaji.set(v_jabatan.lastIndexOf("Admin"), 4000000);
+                            }
+                        }
+                    }  
+                }
+            }
+        }    Integer cek(){
+        int flag = 0;
+        for(int i = 0; i < nama.length(); i++){
+            char Check = nama.charAt(i);
+            if(!(Check >= 'a' && Check <= 'z') && !(Check >= 'A' && Check <= 'Z') && !(Check >= 31 && Check <= 33)){
+                flag++;
+            }
+        }
+        if(flag != 0){
+            System.out.println("Input Harus Alphabet : ");
+            nama = scan.nextLine();
+            cek();
+        }
+        if(nama.length() < 3){
+            do{
+                System.out.println("Input Harus lebih dari 3 char : ");
+                nama = scan.nextLine();
+                cek();
+            }while (nama.length() < 3);
+        }
+        return flag;
+    }
+    // Integer cout=0, cout1=0, cout2=0;
+    void input(){
+        System.out.println("Input Nama [Minimal 3 Char]:");
+        nama = scan.nextLine();
+        cek();
+        System.out.println("Input Gender [Laki Laki / Perempuan (Case-Sensitive)]: ");
+        Gender = scan.nextLine();
+        if(!Gender.equals("Laki Laki") && !Gender.equals("Perempuan")){
+            do{
+                System.out.println("Harus Laki Laki/Perempuan : ");
+                Gender = scan.nextLine();
+            }while(!Gender.equals("Laki Laki") && !Gender.equals("Perempuan"));
+        }
+        System.out.println("Input Jabatan [Manager / Supervisor / Admin] (Case-Sensitive): ");
+        jabatan = scan.nextLine();
+        if(!jabatan.equals("Manager") && !jabatan.equals("Supervisor") && !jabatan.equals("Admin")){
+            do{
+                System.out.println("Harus [Manager / Supervisor / Admin] : ");
+                jabatan = scan.nextLine();
+            }while(!jabatan.equals("Manager") && !jabatan.equals("Supervisor") && !jabatan.equals("Admin"));
+        }
+        Integer gaji = 8000000;
+        Integer gaji2 = 6000000;
+        Integer gaji3 = 4000000;
+        if(jabatan.equals("Manager")){
+            v_manager.add(jabatan);
+            v_gaji.add(gaji);
+            Integer cout = 0;
+            for(int i = 0; i < v_jabatan.size(); i++){
+                if(v_manager.size() >= 4){
+                    if(v_jabatan.get(i).equals("Manager")){
+                        v_gaji.set(i, 8800000);
+                        cout++;
+                        if(cout == v_manager.size()){
+                            v_gaji.set(i - 1, 8000000);
+                        }
+                    }
+                }
+            }
+        }else if(jabatan.equals("Supervisor")){
+            v_supervisor.add(jabatan);
+            v_gaji.add(gaji2);
+            Integer cout1 = 0;
+            for(int i = 0; i < v_jabatan.size(); i++){
+                if(v_supervisor.size() >= 4){
+                    if(v_jabatan.get(i).equals("Supervisor")){
+                        v_gaji.set(i, 6450000);
+                        cout1++;
+                        if(cout1 == v_supervisor.size()){
+                            v_gaji.set(i - 1, 6000000);
+                        }
+                    }
+                }
+            }
+        }else if(jabatan.equals("Admin")){
+            v_admin.add(jabatan);
+            v_gaji.add(gaji3);
+            Integer cout2 = 0;
+            for(int i = 0; i < v_jabatan.size(); i++){
+                if(v_admin.size() >= 4){
+                    if(v_jabatan.get(i).equals("Admin")){
+                        v_gaji.set(i, 4200000);
+                        cout2++;
+                        if(cout2 == v_admin.size()){
+                            v_gaji.set(i - 1, 4000000);
+                        }
+                    }
+                }
+            }
+        }
+        String kode = ID2() + "-" + ID1();
+        System.out.println("Kode Karyawan : " + kode);
+
+
+        v_name.add(nama);
+        v_code.add(kode);
+        v_jabatan.add(jabatan);
+        v_gender.add(Gender);
+        System.out.println("Size Nama : " + v_name.size());
+    }
+
+
+
+
+    void view(){
+        String a = "No", b = "Kode", c = "Nama Karyawan", d = "Gender", e = "Jabatan", f = "Gaji";
+        checkGaji();
+        sort();
+        System.out.println("===============================================================================");
+        System.out.printf("|%-3s |%-8s |%-20s |%-10s |%-10s |%-15s |\n", a, b, c, d, e, f);
+        System.out.println("===============================================================================");
+        for (int i = 0; i < v_name.size(); i++) {
+            System.out.printf("|%-3d |%-8s |%-20s |%-10s |%-10s |%-15d |\n", (i + 1), v_code.get(i), v_name.get(i),
+                    v_gender.get(i), v_jabatan.get(i), v_gaji.get(i));
+        }
+        System.out.println("===============================================================================");
+    }
+    void sort(){
+        for(int i = 0; i < v_name.size(); i++){
+            for(int j = 0; j < v_name.size() - 1; j++){
+                if(v_name.get(j).compareToIgnoreCase(v_name.get(j + 1)) > 0){
+                    String temp = v_name.get(j);
+                    v_name.set(j, v_name.get(j + 1));
+                    v_name.set(j + 1, temp);
+
+                    String temp2 = v_jabatan.get(j);
+                    v_jabatan.set(j, v_jabatan.get(j + 1));
+                    v_jabatan.set(j + 1, temp2);
+
+                    Integer temp3 = v_gaji.get(j);
+                    v_gaji.set(j, v_gaji.get(j + 1));
+                    v_gaji.set(j + 1, temp3);
+
+                    String temp6 = v_gender.get(j);
+                    v_gender.set(j, v_gender.get(j + 1));
+                    v_gender.set(j + 1, temp6);
+
+                    String temp7 = v_code.get(j);
+                    v_code.set(j, v_code.get(j + 1));
+                    v_code.set(j + 1, temp7);
+                }
+            }
+        }
+    }
+    String ID1(){
+        String id1 = "";
+        for(int i = 0; i < 4; i++) {
+            id1 += (char) (r.nextInt(10) + 48);
+        }
+        return id1;
+    }
+    String ID2(){
+        String id2 = "";
+        for(int i = 0; i < 2; i++){
+            id2 += (char) (r.nextInt(26) + 65);
+        }
+        return id2;
+    }
+
+    Integer update = 0;
+
+
+
+    void update(){
+        if(v_name.isEmpty()){
+            System.out.println("No Data!!!");
+        }else{
+            view();
+            System.out.println("Input index to update : ");
+            update = scan.nextInt();
+
+            if(v_jabatan.get(update-1).equals("Manager")){
+                v_manager.remove(v_manager.size()-1);
+            }else if (v_jabatan.get(update-1).equals("Supervisor")){
+                v_supervisor.remove(v_supervisor.size()-1);
+            }else if (v_jabatan.get(update-1).equals("Admin")){
+                v_admin.remove(v_admin.size()-1);
+            }
+
+            System.out.println("Input Nama [Minimal 3 Char]:");
+            scan.nextLine();
+            nama = scan.nextLine();
+            cek();
+
+            System.out.println("Input Gender [Laki Laki / Perempuan (Case-Sensitive)]: ");
+            Gender = scan.nextLine();
+            if(!Gender.equals("Laki Laki") && !Gender.equals("Perempuan")){
+                do{
+                    System.out.println("Harus Laki Laki/Perempuan : ");
+                     Gender = scan.nextLine();
+                }while (!Gender.equals("Laki Laki") && !Gender.equals("Perempuan"));
+            }
+            System.out.println("Input Jabatan [Manager / Supervisor / Admin] (Case-Sensitive): ");
+            jabatan = scan.nextLine();
+            if(!jabatan.equals("Manager") && !jabatan.equals("Supervisor") && !jabatan.equals("Admin")){
+                do{
+                    System.out.println("Harus [Manager / Supervisor / Admin] : ");
+                    jabatan = scan.nextLine();
+                }while (!jabatan.equals("Manager") && !jabatan.equals("Supervisor")&& !jabatan.equals("Admin"));
+            }
+            Integer gaji = 8000000;
+            Integer gaji2 = 6000000;
+            Integer gaji3 = 4000000;
+            if(jabatan.equals("Manager")){
+                v_manager.add(jabatan);
+                v_gaji.add(gaji);
+                Integer cout = 0;
+                for(int j = 0; j < v_jabatan.size(); j++){
+                    if(v_manager.size() >= 4){
+                        if(v_jabatan.get(j).equals("Manager")){
+                            v_gaji.set(j, 8800000);
+                            cout++;
+                            if(cout == v_manager.size()){
+                                v_gaji.set(j - 1, 8000000);
+                            }
+                        }
+                    }
+                }
+            }else if (jabatan.equals("Supervisor")){
+                v_supervisor.add(jabatan);
+                v_gaji.add(gaji2);
+                Integer cout1 = 0;
+                for(int j = 0; j < v_jabatan.size(); j++){
+                    if(v_supervisor.size() >= 4){
+                        if(v_jabatan.get(j).equals("Supervisor")){
+                            v_gaji.set(j, 6450000);
+                            cout1++;
+                            if(cout1 == v_supervisor.size()){
+                                v_gaji.set(j - 1, 6000000);
+                            }
+                        }
+                    }
+                }
+            }else if (jabatan.equals("Admin")){
+                v_admin.add(jabatan);
+                v_gaji.add(gaji3);
+                Integer cout2 = 0;
+                for(int j = 0; j < v_jabatan.size(); j++){
+                    if(v_admin.size() >= 4){
+                        if(v_jabatan.get(j).equals("Admin")){
+                            v_gaji.set(j, 4200000);
+                            cout2++;
+                            if(cout2 == v_admin.size()){
+                                v_gaji.set(j - 1, 4000000);
+                            }
+                        }
+                    }
+                }
+            }
+
+            String kode = ID2() + "-" + ID1();
+            System.out.println("Kode Karyawan : " + kode);
+
+            v_name.set(update-1, nama);
+            v_code.set(update-1, kode);
+            v_jabatan.set(update-1, jabatan);
+            v_gender.set(update-1, Gender);
+            v_gaji.set(update-1, v_gaji.get(v_gaji.size() - 1));
+        }
+    }
+
+    Integer delete = 0;
+
+    void delete(){
+        if(v_name.isEmpty()){
+            System.out.println("No Data!!!");
+        }else{
+            view();
+            System.out.println("Input index to delete : ");
+            delete = scan.nextInt();
+            scan.nextLine();
+            if(v_jabatan.get(delete - 1).equals("Manager")){
+                v_manager.remove(v_manager.size() - 1);
+            }else if (v_jabatan.get(delete - 1).equals("Supervisor")){
+                v_supervisor.remove(v_supervisor.size() - 1);
+            }else if (v_jabatan.get(delete - 1).equals("Admin")){
+                v_admin.remove(v_admin.size() - 1);
+            }
+            v_name.remove(delete - 1);
+            v_gender.remove(delete - 1);
+            v_jabatan.remove(delete - 1);
+            v_gaji.remove(delete - 1);
+            v_code.remove(delete - 1);
+                checkGaji();
+            }
+        }
+    void exit(){
+        System.out.println("Thanks, bye!!!");
+        System.exit(0);
+    }
+    Integer pilih=0;
+    String pilih1="";
+    public Mentoll(){
+        do{
+            menu();
+                pilih1=scan.nextLine();
+                do{
+                    try{
+                        pilih = Integer.parseInt(pilih1);
+                    }catch (Exception e){
+                        //TODO: handle exception
+                        System.out.println("Input Number : ");
+                        pilih1=scan.nextLine();
+                        pilih=-1;
+                    }
+                }while(pilih == -1);
+            switch(pilih){
+                case 1:
+                input();
+                    break;
+
+                case 2:
+                view();
+                    break;
+                
+                case 3:
+                update();
+                    break;
+
+                case 4:
+                delete();
+                    break;
+
+                case 5:
+                exit();
+                    break;
+            }
+        }while(pilih != 5);
+    }
+    public static void main(String[] args){
+        new Mentoll();
+    }
+}
